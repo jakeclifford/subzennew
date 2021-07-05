@@ -1,0 +1,95 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<div class="container costs">
+    <h3>You Are Spending</h3>
+    <div class="row">
+      <div class="col">
+          <h2>{{ daily_cost | usd }}</h2>
+          <p>Daily</p>
+      </div>
+      <div class="col">
+          <h2>{{ weekly_cost | usd }}</h2>
+          <p>Weekly</p>       
+      </div>
+      <div class="col">
+          <h2>{{ monthly_cost | usd }}</h2>
+          <p>Monthly</p>  
+      </div>
+      <div class="col">
+          <h2>{{ yearly_cost | usd }}</h2>
+          <p>Yearly</p> 
+      </div>
+    </div>
+  </div>
+
+<div class="container table-cont justify-content-center">
+    <table class = "table justify-content-center table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Subscription</th>
+                <th scope="col">Period</th>
+                <th scope="col">Next Payment</th>
+                <th scope="col">Price</th>
+                <th></th>
+                <th></th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for sub in subs %}
+            <tr>   
+                <td class='name'>{{ sub['sub_name'] }}</td>
+                <td>{{ sub['pay_period'] }}</td>
+                <td>{{ sub['pay_date'] }}</td>  
+                <td class='price'>{{ sub['price'] | usd }}</td> 
+                <td class="tbl-btn">
+                    <form action="/delete" method='post'>
+                        <input type='hidden' name='id' value="{{ sub['id'] }}"/>
+                        <button type="submit" class="btn-close" >
+                    </form>
+                </td>
+                <td class="tbl-btn">
+                    <form action="/edit" method='post'>
+                        <input type='hidden' name='id' value="{{ sub['id'] }}"/>
+                        <button type="submit" class="btn edit-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>        
+                        </button>
+                    </form>
+                </td>                 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<form action = '/' method = "post">
+    <div class="row">
+        <div class = "form-group col">
+            <input class = "form-control" autocomplete="off"  name = "subscription" type = "text" placeholder="Sub name" required>
+        </div>
+        <div class = "form-group col">
+            <input class = "form-control" name = "price" autocomplete="off" type = "number" placeholder = "Price" min ='0' step='0.01' required>
+        </div>
+    </div>
+    <div class="row">
+        <div class = "form-group col">
+            <select class= "form-control" name="period" required>
+                <option value="" disabled selected>Choose Period</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+            </select> 
+        </div>
+        <div class = "form-group col">
+            <input class = "form-control" name = "pay_date" type = "date" required> 
+        </div>
+    </div>
+    <button id = "btn-add" class = "btn btn-primary" type = "submit">Add</button>
+
+</form>
+
+{% endblock %}
