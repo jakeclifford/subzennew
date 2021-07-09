@@ -1,1 +1,1 @@
-web: gunicorn dep:app
+web: gunicorn shielded-escarpment-02365:app
