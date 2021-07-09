@@ -3,7 +3,7 @@
 {% block main %}
 
 <div class="container costs">
-    <h3>You are Spending</h3>
+    <h3>{{ user['email'] }}, You are Spending</h3>
     <div class="row">
       <div class="col">
           <h2>{{ daily_cost | usd }}</h2>
@@ -24,19 +24,20 @@
     </div>
   </div>
 
-<div class="container table-cont justify-content-center">
-    <table class = "table justify-content-center table-striped table-hover">
-        <thead class="thead-dark">
-            <tr>
+  <div class="col-lg-12 table-new">
+    <div class="table-responsive"> 
+      <table class="table table-bordered table-striped table-hover"> 
+        <thead> 
+          <tr>
                 <th scope="col">Subscription</th>
                 <th scope="col">Period</th>
                 <th scope="col">Next Payment</th>
                 <th scope="col">Price</th>
                 <th></th>
                 <th></th> 
-            </tr>
-        </thead>
-        <tbody>
+           </tr> 
+        </thead> 
+        <tbody> 
             {% for sub in subs %}
             <tr>   
                 <td class='name'>{{ sub['sub_name'] }}</td>
@@ -62,9 +63,12 @@
                 </td>                 
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </tbody> 
+           </table> 
+         </div>
+    </div>
+
+<div class="col-lg-12 form-subzen">
 <form action = '/' method = "post">
     <div class="row">
         <div class = "form-group col">
@@ -91,5 +95,6 @@
     <button id = "btn-add" class = "btn btn-primary" type = "submit">Add</button>
 
 </form>
+</div>
 
 {% endblock %}

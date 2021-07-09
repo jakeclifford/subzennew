@@ -22,12 +22,34 @@
             <div class="container">
               <a class="navbar-brand" href="/">
                 <img src="/static/S.svg" alt="" width="60" height="48" class="d-inline-block align-text-centre">
-                Subzen
+                Subzen        
               </a>
+              {% if session.user_id %}
+                    <ul class="nav navbar-nav navbar-right">    
+                        <li><a class="nav-link" href="/logout">Log Out</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                      <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                {% endif %}
             </div>
         </nav>
+        
 
-        <main class="container p-5">
+        {% with messages = get_flashed_messages(with_categories='true') %}
+        {% if messages %}
+          {% for message in messages %}
+          <dic class='alert alert-danger alter-dismissable fade show' role='alert'>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">x</button>
+          </div>
+          {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <main>
           {% block main %}{% endblock %}
         </main>
 
